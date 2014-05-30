@@ -2,7 +2,7 @@
 
 console.log("Loading CMS...");
 
-cms = function () {
+var cms = function () {
 
     var doSomething = function () {
         console.log('doSomething()');
