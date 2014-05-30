@@ -1,8 +1,10 @@
+"use strict";
+
 console.log("Loading CMS...");
 
 cms = function () {
 
-    doSomething = function () {
+    var doSomething = function () {
         console.log('doSomething()');
     };
 
