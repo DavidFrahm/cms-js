@@ -1,3 +1,5 @@
+"use strict";
+
 beforeEach(function () {
     this.addMatchers({
         toBeSomething: function () {

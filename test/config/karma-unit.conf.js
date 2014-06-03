@@ -5,7 +5,7 @@ module.exports = function(config) {
 		frameworks: ['jasmine'],
 
 		files: [
-			'../lib/jquery/jquery-2.1.1.min.js',
+			'../lib/jquery/jquery-2.1.1.js',
 			'../src/**/*.js',
             'lib/**/*.js',
             'spec/**/*.js'
