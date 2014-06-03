@@ -1,2 +1,8 @@
+# OS
 .DS_Store
+
+# IDE, Tools
 .idea/
+
+# Build
+node_modules/

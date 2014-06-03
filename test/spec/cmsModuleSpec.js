@@ -1,5 +1,5 @@
 describe("Module", function () {
-    it("should be available as global varibale", function () {
+    it("should be available as global variable", function () {
         expect(cms).toBeDefined();
     });
 
@@ -9,5 +9,10 @@ describe("Module", function () {
         cms.doSomething();
 
         expect(consoleSpy).toHaveBeenCalledWith('doSomething()');
+    });
+
+    it("should work with custom matchers", function () {
+        var myObject = {something: "something"};
+        expect(myObject).toBeSomething();
     });
 });
