@@ -20,9 +20,9 @@ describe("Module", function () {
         });
     });
 
-    describe("content", function () {
-        describe("text", function () {
-            it("should transform to an html div string", function () {
+    describe("HTML interface", function () {
+        describe("text object", function () {
+            it("should transform to a jQuery div node", function () {
                 var ajaxSpy = spyOn($, 'ajax').andCallFake(function () {
                     var d = $.Deferred();
                     d.resolve({type: 'text', content: 'The content.'});
@@ -32,7 +32,12 @@ describe("Module", function () {
                 var textElement = cms.html.getTextElement();
 
                 expect(ajaxSpy).toHaveBeenCalled();
-                expect(textElement).toEqual('<div>The content.</div>');
+                // TODO: Custom matcher(s), e.g., toBeJqueryElement() or toBeJqueryNode(), toHaveTagName('div')
+                expect(textElement).toEqual(jasmine.any(Object));
+                expect(textElement.size()).toEqual(1);
+                expect(textElement.html()).toEqual('The content.');
+                expect($("<div />").append(textElement.clone()).html()).toEqual('<div>The content.</div>');
+                expect(textElement.prop('tagName').toLowerCase()).toEqual('div');
             });
             it("should throw error when ajax fails", function () {
                 var logSpy = spyOn(cms, 'log');

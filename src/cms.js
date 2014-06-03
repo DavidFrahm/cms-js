@@ -10,7 +10,7 @@ var cms = function () {
         var element = null;
         $.ajax({url: 'http://cms.pwbly.com/'})
             .then(function (data) {
-                element = '<div>' + data.content + '</div>';
+                element = $('<div>' + data.content + '</div>');
             })
             .fail(function () {
                 cms.log("API error on GET");
