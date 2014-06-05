@@ -8,7 +8,7 @@ var cms = function () {
 
     var getHtmlTextElement = function () {
         var element = null;
-        $.ajax({url: 'http://cms.pwbly.com/'})
+        $.ajax({url: 'http://cms.pwbly.com/object/i_echo_stuff'})
             .then(function (data) {
                 element = $('<div>' + data.content + '</div>');
             })
