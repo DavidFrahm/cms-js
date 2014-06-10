@@ -9,11 +9,11 @@
             $(function() {
                 cms.html.getText()
                     .then(function (text) {
-                            $('#objects #text').html(text);
+                            $('#objects #text').next().text(text);
                         });
                 cms.html.getTextElement()
                     .then(function (textNode) {
-                            $('#objects #textNode').html(textNode);
+                            $('#objects #textNode').after(textNode);
                         });
             });
         </script>
@@ -22,10 +22,9 @@
         <h1>Sample App</h1>
         <h2>Objects</h2>
         <div id="objects">
-            <h3>Text</h3>
-            <div id="text"></div>
-            <h3>Text Node</h3>
-            <div id="textNode"></div>
+            <h3 id="text">Text</h3>
+            <div class="original"></div>
+            <h3 id="textNode">Text Node</h3>
         </div>
     </body>
 </html>

@@ -1,9 +1,5 @@
 "use strict";
 
-function stickIt(node) {
-
-}
-
 var cms = function () {
 
     var doSomething = function () {
@@ -13,7 +9,6 @@ var cms = function () {
     var getText = function () {
         return $.ajax({url: 'http://cms.pwbly.com/object/i_echo_stuff'})
             .then(function (data) {
-                console.log('then > data', data);
                 return data.content;
             })
             .fail(function () {
@@ -24,7 +19,6 @@ var cms = function () {
     var getHtmlTextElement = function () {
         return getText()
             .then(function (text) {
-                console.log('then > text', text);
                 return $('<p>' + text + '</p>');
             })
             .fail(function () {
