@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Jasmine Spec Runner</title>
+        <script type="text/javascript" src="../lib/jquery/jquery-2.1.1.js"></script>
+        <script type="text/javascript" src="../src/cms.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                cms.html.getText()
+                    .then(function (text) {
+                            $('#objects #text').html(text);
+                        });
+                cms.html.getTextElement()
+                    .then(function (textNode) {
+                            $('#objects #textNode').html(textNode);
+                        });
+            });
+        </script>
+    </head>
+    <body>
+        <h1>Sample App</h1>
+        <h2>Objects</h2>
+        <div id="objects">
+            <h3>Text</h3>
+            <div id="text"></div>
+            <h3>Text Node</h3>
+            <div id="textNode"></div>
+        </div>
+    </body>
+</html>
