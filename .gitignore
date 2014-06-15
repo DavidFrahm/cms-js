@@ -3,6 +3,7 @@
 
 # IDE, Tools
 .idea/
+*.iml
 
 # Build
 node_modules/
