@@ -27,19 +27,32 @@ module.exports = function (grunt) {
             options: {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
             },
-            build: {
+            dist: {
                 src: 'src/<%= pkg.name %>.js',
-                dest: 'build/<%= pkg.name %>.min.js'
+                dest: 'dist/<%= pkg.name %>.min.js'
+            }
+        },
+
+        copy: {
+            dist: {
+                files: [
+                    {
+                        expand: true,
+                        flatten: true,
+                        dest:'dist/',
+                        src: 'src/*.js'
+                    }
+                ]
             }
         },
 
         bump: {
             options: {
-                files: ['package.json','bower.json'],
+                files: ['package.json', 'bower.json'],
                 updateConfigs: ['pkg'],
                 commit: true,
                 commitMessage: 'Release v%VERSION%',
-                commitFiles: ['package.json','bower.json'],
+                commitFiles: ['package.json', 'bower.json'],
                 createTag: true,
                 tagName: 'v%VERSION%',
                 tagMessage: 'Version %VERSION%',
@@ -51,6 +64,6 @@ module.exports = function (grunt) {
     });
 
     // Default task(s).
-    grunt.registerTask('default', ['uglify']);
+    grunt.registerTask('default', ['uglify:dist','copy:dist']);
 
 };
