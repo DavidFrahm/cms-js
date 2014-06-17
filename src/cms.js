@@ -1,13 +1,9 @@
 "use strict";
 
-var cms = function () {
+var cmsApi = function () {
 
-    var doSomething = function () {
-        console.log('doSomething()');
-    };
-
-    var getText = function () {
-        return $.ajax({url: 'http://cms.pwbly.com/object/i_echo_stuff'})
+    var getText = function (objectName) {
+        return $.ajax({url: 'http://cms.pwbly.com/object/' + objectName})
             .then(function (data) {
                 return data.content;
             })
@@ -16,14 +12,38 @@ var cms = function () {
             });
     };
 
-    var getHtmlTextElement = function () {
-        return getText()
+    var getImage = function () {
+        return 'http://cms.pwbly.com/object/xxTestImage/file';
+        // TODO: Should this return a promise like the others do/will?
+//        var d = $.Deferred();
+//        d.resolve('http://cms.pwbly.com/object/xxTestImage/file');
+//        return d.promise();
+    };
+
+    return {
+        getText: getText,
+        getImage: getImage
+    }
+}();
+
+var cms = function () {
+
+    var doSomething = function () {
+        console.log('doSomething()');
+    };
+
+    var getHtmlTextElement = function (objectName) {
+        return cmsApi.getText(objectName)
             .then(function (text) {
                 return $('<p>' + text + '</p>');
             })
             .fail(function () {
                 cms.log("API error on GET");
             });
+    };
+
+    var getHtmlImageElement = function () {
+
     };
 
     var log = function (message) {
@@ -33,8 +53,8 @@ var cms = function () {
     return {
         doSomething: doSomething,
         html: {
-            getText: getText,
-            getTextElement: getHtmlTextElement
+            getTextElement: getHtmlTextElement,
+            getImageElement: getHtmlImageElement
         },
         log: log
     }

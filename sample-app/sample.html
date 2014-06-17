@@ -2,16 +2,16 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Jasmine Spec Runner</title>
+        <title>Sample App</title>
         <script type="text/javascript" src="../lib/jquery/jquery-2.1.1.js"></script>
         <script type="text/javascript" src="../src/cms.js"></script>
         <script type="text/javascript">
             $(function() {
-                cms.html.getText()
+                cmsApi.getText('testText')
                     .then(function (text) {
                             $('#objects #text').next().text(text);
                         });
-                cms.html.getTextElement()
+                cms.html.getTextElement('testText')
                     .then(function (textNode) {
                             $('#objects #textNode').after(textNode);
                         });
