@@ -60,10 +60,19 @@ module.exports = function (grunt) {
                 //pushTo: 'upstream',
                 gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d'
             }
+        },
+
+        //Test settings
+        karma: {
+            unit: {
+                configFile: 'test/config/karma-unit.conf.js',
+                singleRun: true
+            }
         }
+
     });
 
     // Default task(s).
-    grunt.registerTask('default', ['uglify:dist','copy:dist']);
+    grunt.registerTask('default', ['karma','uglify:dist','copy:dist']);
 
 };
