@@ -12,12 +12,10 @@ var cmsApi = function () {
             });
     };
 
-    var getImage = function () {
-        return 'http://cms.pwbly.com/object/xxTestImage/file';
-        // TODO: Should this return a promise like the others do/will?
-//        var d = $.Deferred();
-//        d.resolve('http://cms.pwbly.com/object/xxTestImage/file');
-//        return d.promise();
+    var getImage = function (objectName) {
+        var d = $.Deferred();
+        d.resolve('http://cms.pwbly.com/object/' + objectName + '/file');
+        return d.promise();
     };
 
     return {
@@ -42,8 +40,14 @@ var cms = function () {
             });
     };
 
-    var getHtmlImageElement = function () {
-
+    var getHtmlImageElement = function (objectName) {
+        return cmsApi.getImage(objectName)
+            .then(function (fileUrl) {
+                return $('<img src="' + fileUrl + '">');
+            })
+            .fail(function () {
+                cms.log("API error on GET");
+            });
     };
 
     var log = function (message) {
