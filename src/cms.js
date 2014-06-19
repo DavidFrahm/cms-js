@@ -13,9 +13,13 @@ var cmsApi = function () {
     };
 
     var getImage = function (objectName) {
-        var d = $.Deferred();
-        d.resolve('http://cms.pwbly.com/object/' + objectName + '/file');
-        return d.promise();
+        return $.ajax({url: 'http://cms.pwbly.com/object/' + objectName})
+            .then(function (data) {
+                return 'http://cms.pwbly.com/object/' + objectName + '/file';
+            })
+            .fail(function () {
+                cms.log("API error on GET");
+            });
     };
 
     return {

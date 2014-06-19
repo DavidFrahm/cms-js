@@ -3,6 +3,11 @@
 describe("Module", function () {
 
     describe("cmsApi", function () {
+        var logSpy;
+        beforeEach(function () {
+            logSpy = spyOn(cms, 'log');
+        });
+
         it("should be available as global variable", function () {
             expect(cmsApi).toBeDefined();
         });
@@ -50,7 +55,6 @@ describe("Module", function () {
                 expect(text).toEqual("The content.");
             });
             it("should throw error when ajax fails", function () {
-                var logSpy = spyOn(cms, 'log');
                 var ajaxSpy = spyOn($, 'ajax').andCallFake(function () {
                     var d = $.Deferred();
                     d.reject({error: 'Some error message'});
@@ -64,20 +68,24 @@ describe("Module", function () {
             });
         });
         describe("image", function () {
-            // TODO: Should getImage call api just to verify image exists?
-            xit("should call api endpoint with object name", function () {
+            it("should call api endpoint with object name to verify object exists", function () {
                 var ajaxSpy = spyOn($, 'ajax').andCallFake(function () {
                     var d = $.Deferred();
-                    d.resolve({type: "image", content: null});
+                    d.resolve({type: "image"});
                     return d.promise();
                 });
 
                 cmsApi.getImage('any-name');
 
-                // TODO: Custom matcher(s), e.g., toHaveBeenCalledWithUrlEndingWith('any-name')
                 expect(ajaxSpy).toHaveBeenCalledWith({url: 'http://cms.pwbly.com/object/any-name'});
             });
             it("should return promise", function () {
+                var ajaxSpy = spyOn($, 'ajax').andCallFake(function () {
+                    var d = $.Deferred();
+                    d.resolve({type: "image"});
+                    return d.promise();
+                });
+
                 var promise = cmsApi.getImage();
 
                 // TODO: Custom matcher(s), e.g., toBeJqueryPromise()
@@ -85,6 +93,11 @@ describe("Module", function () {
                 expect(promise.promise).toEqual(jasmine.any(Function));
             });
             it("should resolve to string", function () {
+                var ajaxSpy = spyOn($, 'ajax').andCallFake(function () {
+                    var d = $.Deferred();
+                    d.resolve({type: "image"});
+                    return d.promise();
+                });
                 var srcUrl;
                 cmsApi.getImage('any-name')
                     .then(function (returnSrcUrl) {
@@ -93,7 +106,18 @@ describe("Module", function () {
 
                 expect(srcUrl).toEqual("http://cms.pwbly.com/object/any-name/file");
             });
-            // TODO: See above todo and implement a test for failures, if applicable.
+            it("should throw error when ajax fails", function () {
+                var ajaxSpy = spyOn($, 'ajax').andCallFake(function () {
+                    var d = $.Deferred();
+                    d.reject({error: 'Some error message'});
+                    return d.promise();
+                });
+
+                cmsApi.getImage();
+
+                expect(ajaxSpy).toHaveBeenCalled();
+                expect(logSpy).toHaveBeenCalled();
+            });
         });
     });
 });
