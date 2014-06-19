@@ -13,25 +13,23 @@ describe("Module", function () {
         });
 
         describe("text", function () {
-            it("should call api endpoint with object name", function () {
-                var ajaxSpy = spyOn($, 'ajax').andCallFake(function () {
+            var ajaxSpy;
+
+            beforeEach(function () {
+                ajaxSpy = spyOn($, 'ajax').andCallFake(function () {
                     var d = $.Deferred();
                     d.resolve({type: "text", content: "The content."});
                     return d.promise();
                 });
+            });
 
+            it("should call api endpoint with object name", function () {
                 cmsApi.getText('any-name');
 
                 // TODO: Custom matcher(s), e.g., toHaveBeenCalledWithUrlEndingWith('any-name')
                 expect(ajaxSpy).toHaveBeenCalledWith({url: 'http://cms.pwbly.com/object/any-name'});
             });
             it("should return promise", function () {
-                var ajaxSpy = spyOn($, 'ajax').andCallFake(function () {
-                    var d = $.Deferred();
-                    d.resolve({type: "text", content: "The content."});
-                    return d.promise();
-                });
-
                 var promise = cmsApi.getText();
 
                 // TODO: Custom matcher(s), e.g., toBeJqueryPromise()
@@ -39,12 +37,6 @@ describe("Module", function () {
                 expect(promise.promise).toEqual(jasmine.any(Function));
             });
             it("should resolve to string", function () {
-                var ajaxSpy = spyOn($, 'ajax').andCallFake(function () {
-                    var d = $.Deferred();
-                    d.resolve({type: "text", content: "The content."});
-                    return d.promise();
-                });
-
                 var text;
                 cmsApi.getText()
                     .then(function (returnText) {
@@ -55,7 +47,7 @@ describe("Module", function () {
                 expect(text).toEqual("The content.");
             });
             it("should throw error when ajax fails", function () {
-                var ajaxSpy = spyOn($, 'ajax').andCallFake(function () {
+                ajaxSpy.andCallFake(function () {
                     var d = $.Deferred();
                     d.reject({error: 'Some error message'});
                     return d.promise();
@@ -68,24 +60,22 @@ describe("Module", function () {
             });
         });
         describe("image", function () {
-            it("should call api endpoint with object name to verify object exists", function () {
-                var ajaxSpy = spyOn($, 'ajax').andCallFake(function () {
+            var ajaxSpy;
+
+            beforeEach(function () {
+                ajaxSpy = spyOn($, 'ajax').andCallFake(function () {
                     var d = $.Deferred();
                     d.resolve({type: "image"});
                     return d.promise();
                 });
+            });
 
+            it("should call api endpoint with object name to verify object exists", function () {
                 cmsApi.getImage('any-name');
 
                 expect(ajaxSpy).toHaveBeenCalledWith({url: 'http://cms.pwbly.com/object/any-name'});
             });
             it("should return promise", function () {
-                var ajaxSpy = spyOn($, 'ajax').andCallFake(function () {
-                    var d = $.Deferred();
-                    d.resolve({type: "image"});
-                    return d.promise();
-                });
-
                 var promise = cmsApi.getImage();
 
                 // TODO: Custom matcher(s), e.g., toBeJqueryPromise()
@@ -93,11 +83,6 @@ describe("Module", function () {
                 expect(promise.promise).toEqual(jasmine.any(Function));
             });
             it("should resolve to string", function () {
-                var ajaxSpy = spyOn($, 'ajax').andCallFake(function () {
-                    var d = $.Deferred();
-                    d.resolve({type: "image"});
-                    return d.promise();
-                });
                 var srcUrl;
                 cmsApi.getImage('any-name')
                     .then(function (returnSrcUrl) {
@@ -107,7 +92,7 @@ describe("Module", function () {
                 expect(srcUrl).toEqual("http://cms.pwbly.com/object/any-name/file");
             });
             it("should throw error when ajax fails", function () {
-                var ajaxSpy = spyOn($, 'ajax').andCallFake(function () {
+                ajaxSpy.andCallFake(function () {
                     var d = $.Deferred();
                     d.reject({error: 'Some error message'});
                     return d.promise();
