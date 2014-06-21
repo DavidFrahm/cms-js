@@ -23,6 +23,10 @@
                     .then(function (imageNode) {
                             $('#objects #imageNode').after(imageNode);
                         });
+                cms.html.getRichTextElement('blahRichtext')
+                    .then(function (richtextNode) {
+                            $('#objects #richtextNode').after(richtextNode);
+                        });
             });
         </script>
     </head>
@@ -33,6 +37,9 @@
             <h3 id="text">Text</h3>
             <div>replace me with text</div>
             <h3 id="textNode">Text Node</h3>
+
+            <h3 id="richtextNode">Rich Text Node</h3>
+
             <h3 id="image">Image</h3>
             <div>replace me with image url</div>
             <h3 id="imageNode">Image Node</h3>

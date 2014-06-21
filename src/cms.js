@@ -25,7 +25,7 @@ var cmsApi = function () {
     var getRichText = function (objectName) {
         return $.ajax({url: 'http://cms.pwbly.com/object/' + objectName})
             .then(function (data) {
-                return data.content;
+                return data; // TODO: or data.content? Whichever we use, probably should be consistent with getText.
             })
             .fail(function () {
                 cms.log("API error on GET");
@@ -65,6 +65,27 @@ var cms = function () {
             });
     };
 
+    var getHtmlRichTextElement = function (objectName) {
+        return cmsApi.getRichText(objectName)
+            .then(function (richtextObject) {
+                var markup = '';
+                richtextObject.content.forEach(function (contentItem) {
+                    var style = '';
+                    if (contentItem.style) {
+                        Object.getOwnPropertyNames(contentItem.style).forEach(function (stylePropertyName) {
+                            var stylePropertyValue = contentItem.style[stylePropertyName];
+                            style += stylePropertyName + ': ' + stylePropertyValue + '; ';
+                        });
+                    }
+                    markup += '<span style="' + style.trim() + '">' + contentItem.text + '</span>';
+                });
+                return $('<p>' + markup + '</p>');
+            })
+            .fail(function () {
+                cms.log("API error on GET");
+            });
+    };
+
     var log = function (message) {
         console.log(message);
     };
@@ -73,7 +94,8 @@ var cms = function () {
         doSomething: doSomething,
         html: {
             getTextElement: getHtmlTextElement,
-            getImageElement: getHtmlImageElement
+            getImageElement: getHtmlImageElement,
+            getRichTextElement: getHtmlRichTextElement
         },
         log: log
     }

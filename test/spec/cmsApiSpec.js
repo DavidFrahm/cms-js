@@ -143,7 +143,7 @@ describe("Module", function () {
                     });
 
                 expect(ajaxSpy).toHaveBeenCalled();
-                expect(actual).toEqual(jasmine.any(Array))
+                expect(actual.content).toEqual(jasmine.any(Array))
             });
             it("should throw error when ajax fails", function () {
                 ajaxSpy.andCallFake(function () {
