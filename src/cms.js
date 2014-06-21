@@ -22,9 +22,20 @@ var cmsApi = function () {
             });
     };
 
+    var getRichText = function (objectName) {
+        return $.ajax({url: 'http://cms.pwbly.com/object/' + objectName})
+            .then(function (data) {
+                return data.content;
+            })
+            .fail(function () {
+                cms.log("API error on GET");
+            });
+    };
+
     return {
         getText: getText,
-        getImage: getImage
+        getImage: getImage,
+        getRichText: getRichText
     }
 }();
 
