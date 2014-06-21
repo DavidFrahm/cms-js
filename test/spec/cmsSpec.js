@@ -7,20 +7,30 @@ describe("Module", function () {
             expect(cms).toBeDefined();
         });
 
-        describe("boilerplate samples", function () {
-            it("should do something", function () {
-                var consoleSpy = spyOn(console, 'log');
+describe("boilerplate samples", function () {
 
-                cms.doSomething();
-
-                expect(consoleSpy).toHaveBeenCalledWith('doSomething()');
-            });
-
-            it("should work with custom matchers", function () {
-                var myObject = {something: "something"};
-                expect(myObject).toBeSomething();
-            });
+    beforeEach(function () {
+        this.addMatchers({
+            toBeSomethingBeforeEachInSpec: function (expected) {
+                return this.actual.something === "something";
+            }
         });
+    });
+
+    it("should do something", function () {
+        var consoleSpy = spyOn(console, 'log');
+
+        cms.doSomething();
+
+        expect(consoleSpy).toHaveBeenCalledWith('doSomething()');
+    });
+
+    it("should work with custom matchers", function () {
+        var myObject = {something: "something"};
+        expect(myObject).toBeSomethingBeforeEachInSpec('param, in spec');
+        expect(myObject).toBeSomethingBeforeEachGlobal('param, in global');
+    });
+});
 
         describe("text node", function () {
             it("should call getText with object name parameter", function () {

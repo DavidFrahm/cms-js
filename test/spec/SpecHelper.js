@@ -2,14 +2,8 @@
 
 beforeEach(function () {
     this.addMatchers({
-        toBeSomething: function () {
-            return {
-                compare: function (actual, expected) {
-                    return {
-                        pass: actual.something === "something"
-                    }
-                }
-            };
+        toBeSomethingBeforeEachGlobal: function (expected) {
+            return this.actual.something === "something";
         }
     });
 });
